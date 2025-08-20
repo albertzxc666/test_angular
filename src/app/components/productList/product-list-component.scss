@@ -1,0 +1,244 @@
+.product-list {
+  
+  &__header {
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  &__title {
+    color: white;
+    margin: 0;
+    font-size: 2rem;
+    font-family: 'Minecraft', sans-serif;
+  }
+
+
+  
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+    align-items: start; // Выравнивание по верху
+  }
+
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    
+    p {
+      color: white;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      font-family: 'Minecraft', sans-serif;
+    }
+  }
+
+  &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    
+    .error-message {
+      color: #ff6b6b;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      font-family: 'Minecraft', sans-serif;
+    }
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+  }
+}
+
+
+
+.empty-state {
+  color: white;
+  text-align: center;
+  font-family: 'Minecraft', sans-serif;
+  
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #ccc;
+    font-family: 'Minecraft', sans-serif;
+  }
+}
+
+// Стили для спиннера загрузки
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Стили для кнопок
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Minecraft', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background-color: var(--accent);
+    color: var(--dark-color);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(255,255,255,0.9);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--secondary {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--light-color);
+    border: 1px solid rgba(255,255,255,0.2);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--danger {
+    background-color: rgba(220, 53, 69, 0.8);
+    color: var(--light-color);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(220, 53, 69, 1);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--small {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 10;
+  }
+}
+
+// Стили для кнопки повтора
+.retry-button {
+  padding: 12px 24px;
+  background-color: var(--accent);
+  color: var(--dark-color);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Minecraft', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(255,255,255,0.9);
+    transform: translateY(-2px);
+  }
+}
+
+// Планшеты
+@media (max-width: 768px) {
+  .product-list {
+    
+    
+    &__items {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 0 15px;
+    }
+  }
+}
+
+// Мобильные устройства
+@media (max-width: 480px) {
+  .product-list {
+    &__header {
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    
+    &__title {
+      font-size: 1.5rem;
+    }
+
+
+    
+    &__items {
+      grid-template-columns: 1fr;
+      gap: 15px;
+      padding: 0 15px;
+    }
+
+    &__loading {
+      padding: 40px 15px;
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    &__error {
+      padding: 40px 15px;
+      
+      .error-message {
+        font-size: 1rem;
+      }
+    }
+
+    &__empty {
+      padding: 40px 15px;
+    }
+  }
+
+
+}
+
+// Стили для карточек товаров удалены, так как они теперь в product-item-component.scss

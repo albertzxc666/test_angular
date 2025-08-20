@@ -1,0 +1,13 @@
+<div class="cart-icon">
+  <a routerLink="/cart" class="cart-icon__link">
+    <div class="cart-icon__icon">
+      🛒
+    </div>
+    @if (cartItemsCount$ | async; as count) {
+      @if (count > 0) {
+        <span class="cart-icon__badge">{{ count }}</span>
+      }
+    }
+  </a>
+</div>
+

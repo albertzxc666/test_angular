@@ -1,0 +1,1 @@
+export const errorDownload: string = 'Ошибка при загрузке товаров';

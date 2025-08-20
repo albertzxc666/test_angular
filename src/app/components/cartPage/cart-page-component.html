@@ -1,0 +1,89 @@
+<div class="cart-page">
+  <div class="cart-page__header">
+    <h2 class="cart-page__title">{{ 'cart.title' | translate }}</h2>
+    @if (isCartEmpty$ | async) {
+      <p class="cart-page__empty">{{ 'cart.empty' | translate }}</p>
+    }
+  </div>
+
+  @if (cartItems$ | async; as items) {
+    @if (items.length > 0) {
+      <div class="cart-page__content">
+        <div class="cart-items">
+          @for (item of items; track trackByCartItemId($index, item)) {
+            <div class="cart-item">
+              <div class="cart-item__image">
+                <img [src]="item.image" [alt]="item.title" (error)="onImageError($event)">
+              </div>
+              
+              <div class="cart-item__info">
+                <h3 class="cart-item__title">{{ item.title }}</h3>
+                <p class="cart-item__price">{{ (item.price | currencyConvert).symbol }}{{ (item.price | currencyConvert).amount | number:'1.2-2' }}</p>
+              </div>
+              
+              <div class="cart-item__quantity">
+                <label for="quantity-{{ item.id }}">{{ 'cart.quantity' | translate }}</label>
+                <input 
+                  type="number" 
+                  id="quantity-{{ item.id }}"
+                  [value]="item.quantity"
+                  min="1"
+                  (change)="onUpdateQuantity(item.id, $any($event.target).valueAsNumber)"
+                  class="cart-item__quantity-input"
+                >
+              </div>
+              
+              <div class="cart-item__total">
+                <p>{{ ((item.price * item.quantity) | currencyConvert).symbol }}{{ ((item.price * item.quantity) | currencyConvert).amount | number:'1.2-2' }}</p>
+              </div>
+              
+              <div class="cart-item__actions">
+                <button 
+                  type="button"
+                  class="btn btn--danger btn--small"
+                  (click)="onRemoveItem(item.id)"
+                >
+                  {{ 'cart.remove' | translate }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+        
+        <div class="cart-summary">
+          <div class="cart-summary__total">
+            <h3>{{ 'cart.total' | translate }}</h3>
+            @if (cartTotal$ | async; as total) {
+              <p class="cart-summary__amount">{{ (total | currencyConvert).symbol }}{{ (total | currencyConvert).amount | number:'1.2-2' }}</p>
+            }
+          </div>
+          
+          <div class="cart-summary__actions">
+            <button 
+              type="button"
+              class="btn btn--secondary"
+              (click)="onClearCart()"
+            >
+              {{ 'cart.clear' | translate }}
+            </button>
+            
+            <button 
+              type="button"
+              class="btn btn--primary"
+              (click)="onCheckout()"
+            >
+              {{ 'cart.checkout' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="cart-page__empty-state">
+        <p>{{ 'cart.emptyState' | translate }}</p>
+        <a routerLink="/products" class="btn btn--primary">
+          {{ 'cart.goToProducts' | translate }}
+        </a>
+      </div>
+    }
+  }
+</div>

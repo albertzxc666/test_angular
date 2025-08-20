@@ -1,0 +1,39 @@
+<div class="product-item">
+  <div class="product-item__image">
+    <img 
+      [src]="product.image || '/assets/img/cover.webp'" 
+      [alt]="product.title"
+      (error)="onImageError($event)"
+      (load)="onImageLoad($event)"
+      class="product-item__img"
+    >
+  </div>
+  
+  <div class="product-item__content">
+    <h3 class="product-item__name">{{ product.title }}</h3>
+               <p class="product-item__description">{{ (product.title | descriptionTranslate) || product.description | truncate:100 }}</p>
+         <p class="product-item__price">{{ (product.price | currencyConvert).symbol }}{{ (product.price | currencyConvert).amount | number:'1.2-2' }}</p>
+               <p class="product-item__category">{{ product.category | categoryTranslate }}</p>
+  </div>
+  
+  <div class="product-item__actions">
+    <a [routerLink]="['/products', product.id]" class="product-item__link">
+      {{ 'products.details' | translate }}
+    </a>
+    <button 
+      type="button" 
+      class="btn btn--primary btn--small"
+      (click)="onAddToCart()"
+    >
+      {{ 'products.addToCart' | translate }}
+    </button>
+    <button 
+      type="button" 
+      class="btn btn--danger btn--small"
+      (click)="onDeleteProduct()"
+      [disabled]="deletingProductId === product.id"
+    >
+      {{ deletingProductId === product.id ? ('products.deleting' | translate) : ('products.delete' | translate) }}
+    </button>
+  </div>
+</div>

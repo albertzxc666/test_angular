@@ -1,0 +1,63 @@
+<div class="product-list">
+  <div class="product-list__header">
+    <h2 class="product-list__title">{{ 'products.title' | translate }}</h2>
+    <div class="product-list__actions">
+      <app-language-switcher></app-language-switcher>
+      <a routerLink="/products/new" class="btn btn--primary">
+        {{ 'products.add' | translate }}
+      </a>
+      <app-cart-icon></app-cart-icon>
+    </div>
+  </div>
+  
+  <!-- Состояние загрузки -->
+  @if (isLoading) {
+    <div class="product-list__loading">
+      <div class="loading-spinner"></div>
+      <p>{{ 'products.loading' | translate }}</p>
+    </div>
+  }
+
+  <!-- Состояние ошибки -->
+  @if (error && !isLoading) {
+    <div class="product-list__error">
+      <p class="error-message">{{ error }}</p>
+      <button class="retry-button" (click)="loadProducts()">{{ 'products.retry' | translate }}</button>
+    </div>
+  }
+
+  <!-- Компонент поиска -->
+  @if (!isLoading && !error) {
+    <app-search-component 
+      [searchResultsCount]="searchResultsCount"
+      (searchResults)="onSearchResults($event)"
+      (isSearchingChange)="onSearchingChange($event)"
+      (searchQueryChange)="onSearchQueryChange($event)"
+      (searchResultsCountChange)="onSearchResultsCountChange($event)">
+    </app-search-component>
+  }
+
+  <!-- Список товаров -->
+  @if (!isLoading && !error) {
+    <div class="product-list__items">
+      @for (product of filteredProducts; track trackByProductId($index, product)) {
+        <app-product-item
+          [product]="product"
+          [deletingProductId]="deletingProductId"
+          (addToCart)="onAddToCart($event)"
+          (deleteProduct)="onDeleteProduct($event.productId, $event.productTitle)">
+        </app-product-item>
+      }
+    </div>
+  }
+
+  <!-- Сообщение о пустом результате поиска -->
+  @if (!isLoading && !error && hasActiveSearch() && filteredProducts.length === 0 && !isSearching) {
+    <div class="product-list__empty">
+      <div class="empty-state">
+        <p>{{ 'products.notFound' | translate: { query: getCurrentSearchQuery() } }}</p>
+        <button class="retry-button" (click)="clearSearch()">{{ 'products.clearSearch' | translate }}</button>
+      </div>
+    </div>
+  }
+</div>

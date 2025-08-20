@@ -1,0 +1,240 @@
+.product-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+
+  &__header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--light-color);
+    margin: 0;
+    font-family: 'Minecraft', sans-serif;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    
+    p {
+      color: var(--light-color);
+      font-size: 1rem;
+      margin-top: 1rem;
+      font-family: 'Minecraft', sans-serif;
+    }
+  }
+
+  &__error {
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    
+    .error-message {
+      color: #ff6b6b;
+      margin: 0;
+      font-size: 0.9rem;
+      font-family: 'Minecraft', sans-serif;
+    }
+  }
+
+  &__content--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    font-weight: 500;
+    color: var(--light-color);
+    font-size: 0.9rem;
+    font-family: 'Minecraft', sans-serif;
+  }
+
+  &__input,
+  &__textarea,
+  &__select {
+    padding: 0.75rem;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Minecraft', sans-serif;
+    background: rgba(255,255,255,0.05);
+    color: var(--light-color);
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: rgba(255,255,255,0.5);
+      font-family: 'Minecraft', sans-serif;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.1);
+    }
+
+    &--error {
+      border-color: #ff6b6b;
+      
+      &:focus {
+        border-color: #ff6b6b;
+        box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+      }
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  &__select {
+    cursor: pointer;
+    
+    option {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      font-family: 'Minecraft', sans-serif;
+    }
+  }
+
+  &__error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    font-family: 'Minecraft', sans-serif;
+  }
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Minecraft', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background-color: var(--accent);
+    color: var(--dark-color);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(255,255,255,0.9);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--secondary {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--light-color);
+    border: 1px solid rgba(255,255,255,0.2);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: var(--light-color);
+    border: 2px solid rgba(255,255,255,0.3);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--danger {
+    background-color: rgba(220, 53, 69, 0.8);
+    color: var(--light-color);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+
+    &:hover:not(:disabled) {
+      background-color: rgba(220, 53, 69, 1);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .product-form {
+    padding: 1rem;
+    margin: 1rem;
+
+    &__actions {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+// Стили для спиннера загрузки
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

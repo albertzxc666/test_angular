@@ -1,0 +1,141 @@
+<div class="product-form">
+  <div class="product-form__header">
+    <h2 class="product-form__title">
+      {{ isEditMode ? 'Редактирование товара' : 'Создание нового товара' }}
+    </h2>
+  </div>
+
+  <!-- Состояние загрузки -->
+  @if (isLoading) {
+    <div class="product-form__loading">
+      <div class="loading-spinner"></div>
+      <p>{{ isEditMode ? 'Сохранение изменений...' : 'Создание товара...' }}</p>
+    </div>
+  }
+
+  <!-- Состояние ошибки -->
+  @if (error) {
+    <div class="product-form__error">
+      <p class="error-message">{{ error }}</p>
+    </div>
+  }
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form__content" [class.product-form__content--disabled]="isLoading">
+    <div class="form-group">
+      <label for="title" class="form-group__label">Название товара *</label>
+      <input 
+        type="text" 
+        id="title" 
+        formControlName="title" 
+        class="form-group__input"
+        [class.form-group__input--error]="productForm.get('title')?.invalid && productForm.get('title')?.touched"
+        placeholder="Введите название товара"
+      >
+      @if (getErrorMessage('title')) {
+        <div class="form-group__error">
+          {{ getErrorMessage('title') }}
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="price" class="form-group__label">Цена *</label>
+      <input 
+        type="number" 
+        id="price" 
+        formControlName="price" 
+        class="form-group__input"
+        [class.form-group__input--error]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
+        placeholder="0.00"
+        step="0.01"
+        min="0.01"
+      >
+      @if (getErrorMessage('price')) {
+        <div class="form-group__error">
+          {{ getErrorMessage('price') }}
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="category" class="form-group__label">Категория *</label>
+      <select 
+        id="category" 
+        formControlName="category" 
+        class="form-group__select"
+        [class.form-group__select--error]="productForm.get('category')?.invalid && productForm.get('category')?.touched"
+      >
+        <option value="">Выберите категорию</option>
+        <option value="mouse">Mouse</option>
+        <option value="keyboard">Keyboard</option>
+        <option value="headphones">Headphones</option>
+        <option value="mousepad">Mousepad</option>
+      </select>
+      @if (getErrorMessage('category')) {
+        <div class="form-group__error">
+          {{ getErrorMessage('category') }}
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="image" class="form-group__label">URL изображения</label>
+      <input 
+        type="text" 
+        id="image" 
+        formControlName="image" 
+        class="form-group__input"
+        [class.form-group__input--error]="productForm.get('image')?.invalid && productForm.get('image')?.touched"
+        placeholder="/assets/img/image.webp (необязательно)"
+      >
+      @if (getErrorMessage('image')) {
+        <div class="form-group__error">
+          {{ getErrorMessage('image') }}
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="description" class="form-group__label">Описание *</label>
+      <textarea 
+        id="description" 
+        formControlName="description" 
+        class="form-group__textarea"
+        [class.form-group__textarea--error]="productForm.get('description')?.invalid && productForm.get('description')?.touched"
+        placeholder="Введите подробное описание товара"
+        rows="4"
+      ></textarea>
+      @if (getErrorMessage('description')) {
+        <div class="form-group__error">
+          {{ getErrorMessage('description') }}
+        </div>
+      }
+    </div>
+
+    <div class="product-form__actions">
+      <button 
+        type="submit" 
+        class="btn btn--primary"
+        [disabled]="productForm.invalid || isLoading"
+      >
+        {{ isEditMode ? 'Сохранить изменения' : 'Создать товар' }}
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn btn--secondary"
+        (click)="onReset()"
+      >
+        Сбросить
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn btn--outline"
+        (click)="onCancel()"
+      >
+        Отмена
+      </button>
+    </div>
+  </form>
+</div> 

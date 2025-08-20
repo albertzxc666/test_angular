@@ -1,0 +1,78 @@
+<!-- Состояние загрузки -->
+@if (isLoading) {
+  <div class="product-detail__loading">
+    <div class="loading-spinner"></div>
+    <p>{{ 'products.loading' | translate }}</p>
+  </div>
+}
+
+<!-- Состояние ошибки -->
+@if (error && !isLoading) {
+  <div class="product-detail__error">
+    <h2>{{ 'common.error' | translate }}</h2>
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="loadProduct()">{{ 'products.retry' | translate }}</button>
+    <a routerLink="/products" class="product-detail__back">{{ 'product.backToList' | translate }}</a>
+  </div>
+}
+
+<!-- Информация о товаре -->
+@if (product && !isLoading && !error) {
+  <div class="product-detail">
+    <div class="product-detail__header">
+      <h2 class="product-detail__title">{{ product.title }}</h2>
+      <div class="product-detail__actions">
+        <a [routerLink]="['/products', product.id, 'edit']" class="btn btn--secondary">
+          {{ 'product.edit' | translate }}
+        </a>
+        <button 
+          type="button" 
+          class="btn btn--danger"
+          (click)="onDeleteProduct()"
+          [disabled]="isDeleting"
+        >
+          {{ isDeleting ? ('products.deleting' | translate) : ('product.deleteProduct' | translate) }}
+        </button>
+        <button 
+          type="button"
+          class="btn btn--primary"
+          (click)="onAddToCart()"
+        >
+          {{ 'products.addToCart' | translate }}
+        </button>
+        <a routerLink="/products" class="product-detail__back">{{ 'product.backToList' | translate }}</a>
+      </div>
+    </div>
+    
+    <div class="product-detail__content">
+      <div class="product-detail__image">
+        <img 
+          [src]="product.image" 
+          [alt]="product.title"
+          (error)="onImageError($event)"
+          (load)="onImageLoad($event)"
+        >
+      </div>
+      <div class="product-detail__info">
+                    <p class="product-detail__category">{{ product.category | categoryTranslate }}</p>
+                  <p class="product-detail__price">{{ (product.price | currencyConvert).symbol }}{{ (product.price | currencyConvert).amount | number:'1.0-0' }}</p>
+                  <p class="product-detail__description">{{ (product.title | descriptionTranslate) || product.description }}</p>
+        <div class="product-detail__rating">
+          @if (product.rating) {
+            <p>{{ 'product.rating' | translate: { rate: product.rating.rate, count: product.rating.count } }}</p>
+          } @else {
+            <p>{{ 'rating.no-rating' | translate }}</p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Товар не найден -->
+@if (!product && !isLoading && !error) {
+  <div class="product-detail__error">
+    <h2>{{ 'common.error' | translate }}</h2>
+    <a routerLink="/products" class="product-detail__back">{{ 'product.backToList' | translate }}</a>
+  </div>
+}

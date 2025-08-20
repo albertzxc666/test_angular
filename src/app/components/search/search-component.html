@@ -1,0 +1,41 @@
+<div class="search">
+  <div class="search__container">
+    <div class="search__input-wrapper">
+      <input 
+        type="text" 
+        [formControl]="searchControl"
+        placeholder="Поиск товаров..."
+        class="search__input"
+        [class.searching]="isSearching">
+      <div class="search__icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </div>
+      @if (searchControl.value) {
+        <button 
+          (click)="clearSearch()" 
+          class="search__clear-btn"
+          type="button">
+          ✕
+        </button>
+      }
+    </div>
+    
+    <!-- Индикатор поиска -->
+    @if (isSearching) {
+      <div class="search__loading">
+        <div class="search__spinner"></div>
+        <span>Поиск...</span>
+      </div>
+    }
+    
+    <!-- Результаты поиска -->
+    @if (searchControl.value && !isSearching) {
+      <div class="search__results">
+        <p>Найдено товаров: {{ searchResultsCount }}</p>
+      </div>
+    }
+  </div>
+</div> 
